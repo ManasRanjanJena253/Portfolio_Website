@@ -368,9 +368,9 @@ function ProjectCard({ project, index }) {
   
   const iconMap = {
     "Flappy Bird DQN Agent": <TbBrain className="text-3xl" />,
-    "Multi-Agent Code Refinement System": <FaCode className="text-3xl" />,
-    "DCGAN for Handwritten Digit Generation": <BiCodeCurly className="text-3xl" />,
-    "Financial Insight Dashboard": <MdOutlineAnalytics className="text-3xl" />
+    "Multi-Agent Code Editor (Inspired by MCP)": <FaCode className="text-3xl" />,
+    "Neural Style Transfer Model": <BiCodeCurly className="text-3xl" />,
+    "Real-Time Stock Trading Agent": <MdOutlineAnalytics className="text-3xl" />
   };
   
   return (
@@ -438,24 +438,24 @@ function Projects() {
     {
       title: "Flappy Bird DQN Agent",
       tech: "Gymnasium, PyTorch, Deep Q-Networks",
-      description: "Developed a Deep Q-Network-based reinforcement learning agent to play Flappy Bird. Implemented experience replay, target networks, and soft target updates to tackle instability issues.",
+      description: "Implemented a Deep Q-Network to train an agent to play Flappy Bird using the flappy_bird_gymnasium environment. Used experience replay, ε-greedy policy, and target network updates to stabilize training. This project strengthened my understanding of value-based reinforcement learning and game-playing agents.",
       github: "https://github.com/ManasRanjanJena253/Reinforcement_Learning/tree/main/Depp_Q_Learning(Flappy_Bird)"
     },
     {
-      title: "Multi-Agent Code Refinement System",
-      tech: "LangChain, Python, LLMs",
-      description: "Built a multi-agent code refinement architecture using LangChain, with agents performing specialized roles like bug fixing, performance enhancement, and documentation.",
-      github: "https://github.com/ManasRanjanJena253/Multi_Agent_Code_Refinement"
+      title: "Multi-Agent Code Editor (Inspired by MCP)",
+      tech: "LangChain, MongoDB, LLMs, GenAI",
+      description: "Built a  full-stack system where autonomous agents collaborate to iteratively refine code using the MCP (Model Context Protocol). Built with LangChain, FastAPI, MongoDB, and React. Agents communicate via structured messages, enabling modular task delegation, traceable workflows, and automated code improvement.",
+      github: "https://github.com/ManasRanjanJena253/Multi_Agent_Code_Editor_Inspired_By_MCP"
     },
     {
-      title: "DCGAN for Handwritten Digit Generation",
-      tech: "PyTorch, GANs, MNIST Dataset",
-      description: "Implemented Deep Convolutional GAN from scratch on the MNIST dataset. Used one-sided label smoothing and mini-batch discrimination to tackle mode collapse.",
-      github: "https://github.com/ManasRanjanJena253/GANs"
+      title: "Neural Style Transfer Model",
+      tech: "PyTorch, Streamlit, CNNs",
+      description: "Built a style transfer pipeline using a pretrained VGG19 model to blend content and style from two images. Used perceptual loss based on intermediate CNN features to optimize the output image. Gained hands-on experience with feature extraction, loss balancing, and image synthesis using PyTorch.",
+      github: "https://github.com/ManasRanjanJena253/Neural_Style_Transfer_Project"
     },
     {
       title: "Real-Time Stock Trading Agent",
-      tech: "Reinforcement Learning, PyTorch, Gymnasium",
+      tech: "Reinforcement Learning, PyTorch, Gymnasium, YFinanace",
       description: "Building an RL-based trading agent using DQN for Indian intraday markets. Designedcustom Gym environment with support for order types, trading hours, and leverage (5x).Faced reward signal sparsity, which was handled using hybrid rewards incorporating.",
       github: "https://github.com/ManasRanjanJena253/Trading_Bot"
     }
