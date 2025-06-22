@@ -31,6 +31,51 @@
       --cursor-shadow: 0 0 8px 2px #D72638, 0 0 2px 1px #F5A623;
       --cursor-color: #D72638;
     }
+    /* DARK MODE VARIABLES */
+    body.dark-mode {
+      --background: #191A23;
+      --primary-accent: #F9F9F6;
+      --secondary-accent: #F5A623;
+      --warm-accent: #D72638;
+      --text-color: #F9F9F6;
+      --card-bg: #242539;
+      --card-bg-trans: rgba(36,37,57,0.95);
+      --nav-bg: rgba(36,37,57,0.92);
+      --gray: #34344e;
+      --shadow: 0 4px 32px 0 rgba(20,20,30,0.22), 0 1.5px 6px 0 rgba(245,166,35,0.08);
+      --glow: 0 0 28px 2px #F5A62333;
+      --hero-name-shadow: 0 4px 32px #D7263833, 0 1px 0 #242539, 0 0 16px #F5A62322;
+      --cursor-shadow: 0 0 8px 2px #F5A623, 0 0 2px 1px #D72638;
+      --cursor-color: #F5A623;
+    }
+    /* Toggle Button Styles */
+    .dark-toggle-btn {
+      background: var(--card-bg);
+      color: var(--secondary-accent);
+      border: 2px solid var(--secondary-accent);
+      border-radius: 50%;
+      width: 38px; height: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: background .2s, color .2s, border-color .2s, box-shadow .2s;
+      box-shadow: 0 1px 8px #d7263811;
+      margin-left: 20px;
+      outline: none;
+      position: relative;
+    }
+    .dark-toggle-btn:hover, .dark-toggle-btn:focus {
+      background: var(--secondary-accent);
+      color: var(--card-bg);
+      border-color: var(--warm-accent);
+      box-shadow: 0 4px 16px #f5a62344;
+    }
+    @media (max-width: 900px) {
+      .dark-toggle-btn { margin-left: 10px;}
+    }
+
     * { box-sizing: border-box; }
     html, body {
       margin: 0; padding: 0;
@@ -39,6 +84,7 @@
       color: var(--text-color);
       scroll-behavior: smooth;
       overscroll-behavior-y: contain;
+      transition: background .3s, color .3s;
     }
     /* Navbar */
     nav {
@@ -151,9 +197,13 @@
       min-height: 100vh;
       display: flex; align-items: center; justify-content: center;
       flex-direction: column;
-      background: linear-gradient(120deg, #F9F9F6 0%, #FFF7F5 100%);
+      background: linear-gradient(120deg, var(--background) 0%, #FFF7F5 100%);
       position: relative;
       overflow: hidden;
+      transition: background .3s;
+    }
+    body.dark-mode #hero {
+      background: linear-gradient(120deg, var(--background) 0%, #191A23 100%);
     }
     /* Animated Blobs in Hero */
     .bg-blobs {
@@ -175,6 +225,8 @@
     .blob2 { width: 180px; height: 180px; background: #D72638; bottom: 18%; right: 8%; animation: blobFloat2 21s infinite alternate;}
     .blob3 { width: 140px; height: 140px; background: #F9F9F6; top: 18%; right: 14%; animation: blobFloat3 16s infinite alternate;}
     .blob4 { width: 190px; height: 190px; background: #FFEDD9; bottom: 7%; left: 4%; opacity:0.18; animation: blobFloat4 24s infinite alternate;}
+    body.dark-mode .blob3 { background: #191A23;}
+    body.dark-mode .blob4 { background: #242539; }
     @keyframes blobFloat1 {
       0% { transform: scale(1) translateY(0px) translateX(0);}
       40% { transform: scale(1.1) translateY(60px) translateX(40px);}
@@ -231,9 +283,13 @@
   display: inline-block;
   /* Remove gradient background and background-clip properties */
   animation: glow-focus 2s alternate infinite;
-  transition: text-shadow .4s;
+  transition: text-shadow .4s, color .3s;
   position: relative;
 }
+    body.dark-mode .hero-name {
+      color: #F9F9F6;
+      text-shadow: 0 4px 32px #D7263833, 0 1px 0 #242539, 0 0 16px #F5A62322;
+    }
     /* Cursor with shadow and smooth animation */
     .typed-cursor {
       display: inline-block;
@@ -265,6 +321,9 @@
       color: #383838;
       margin-bottom: 34px;
       opacity: 0.85;
+    }
+    body.dark-mode .hero-desc {
+      color: #dadbe6;
     }
     .cta-btn {
       background: linear-gradient(100deg, #F5A623 0%, #D72638 100%);
@@ -313,6 +372,10 @@
       border: 6px solid var(--card-bg);
       z-index: 2;
     }
+    body.dark-mode .about-img {
+      background: linear-gradient(135deg,#242539 60%, #F5A623 100%);
+      border: 6px solid #242539;
+    }
     .about-img img {
       width: 92%; height: 92%;
       object-fit: cover;
@@ -328,6 +391,7 @@
       box-shadow: var(--shadow);
       backdrop-filter: blur(6px);
       border-left: 4px solid var(--secondary-accent);
+      transition: background .3s, color .3s;
     }
     .about-text h2 {
       font-size: 2rem;
@@ -342,6 +406,9 @@
       padding: 0 0 0 20px;
       color: #383838;
       font-size: 1.05rem;
+    }
+    body.dark-mode .about-list {
+      color: #dadbe6;
     }
     /* Projects */
     #projects .container {
@@ -365,7 +432,8 @@
       transition: 
         transform .27s cubic-bezier(.23,1.7,.6,.93), 
         box-shadow .27s,
-        border-color .24s;
+        border-color .24s,
+        background .3s;
       cursor: pointer;
       will-change: transform, box-shadow, border-color;
       perspective: 900px;
@@ -413,11 +481,17 @@
       font-size: 1.06rem;
       margin-bottom: 6px;
     }
+    body.dark-mode .project-desc {
+      color: #dadbe6;
+    }
     .project-tech {
       font-size: 0.97rem;
       opacity: 0.74;
       margin-bottom: 4px;
       color: #D72638;
+    }
+    body.dark-mode .project-tech {
+      color: #F5A623;
     }
     .project-link {
       margin-top: 8px;
@@ -500,6 +574,9 @@
       font-size: .96rem;
       color: #2e2c39;
     }
+    body.dark-mode .timeline-desc {
+      color: #dadbe6;
+    }
     .timeline-date {
       font-size: 0.97rem;
       color: #888;
@@ -511,6 +588,10 @@
       background: linear-gradient(120deg, #F9F9F6 60%, #FFF7F5 100%);
       position: relative;
       z-index: 2;
+      transition: background .3s;
+    }
+    body.dark-mode #contact {
+      background: linear-gradient(120deg, #191A23 60%, #242539 100%);
     }
     #contact .container {
       max-width: 700px;
@@ -545,10 +626,16 @@
       font-family: inherit;
       background: #fff9;
       margin-bottom: 7px;
-      transition: box-shadow .22s, border-color .2s;
+      transition: box-shadow .22s, border-color .2s, background .3s, color .3s;
       box-shadow: 0 1px 6px #d7263811;
       outline: none;
       color: var(--primary-accent);
+    }
+    body.dark-mode .contact-form input, 
+    body.dark-mode .contact-form textarea {
+      background: #242539cc;
+      color: #F9F9F6;
+      border: 1px solid var(--secondary-accent);
     }
     .contact-form input:focus, .contact-form textarea:focus {
       border-color: var(--warm-accent);
@@ -556,6 +643,11 @@
       background: #fff;
       animation: inputFocusGlow .38s;
       color: var(--primary-accent);
+    }
+    body.dark-mode .contact-form input:focus, 
+    body.dark-mode .contact-form textarea:focus {
+      background: #191A23cc;
+      color: #F9F9F6;
     }
     @keyframes inputFocusGlow {
       0% { box-shadow: 0 1px 6px #f5a62311;}
@@ -626,6 +718,9 @@
       font-family: 'Inter',sans-serif;
       text-align: center;
     }
+    body.dark-mode .contact-email {
+      color: #f9f9f6;
+    }
     /* Footer */
     footer {
       background: #fff9;
@@ -635,6 +730,11 @@
       color: #777;
       border-top: 1.5px solid var(--secondary-accent);
       margin-top: 16px;
+      transition: background .3s, color .3s;
+    }
+    body.dark-mode footer {
+      background: #242539cc;
+      color: #bfbfc9;
     }
     /* Responsive */
     @media (max-width: 900px) {
@@ -668,6 +768,11 @@
         <li><a href="#experience">Experience</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
+      <!-- Dark Mode Toggle Button Start -->
+      <button class="dark-toggle-btn" id="darkToggleBtn" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <i class="fa fa-moon"></i>
+      </button>
+      <!-- Dark Mode Toggle Button End -->
       <div class="hamburger" id="hamburger">
         <span></span><span></span><span></span>
       </div>
@@ -711,7 +816,8 @@
         <h2>About Me</h2>
         <p>
           I’m a <b>B.Tech student in Mathematics and Computing</b> at Punjab Engineering College, Chandigarh.<br>
-          My passion lies in <b>Artificial Intelligence, Machine Learning, and Reinforcement Learning</b>. My project experience spans from deep learning classifiers and GANs to real-time RL agents an[...]
+          My passion lies in <b>Artificial Intelligence, Machine Learning, and Reinforcement Learning</b>. My project experience spans from deep learning classifiers and GANs to real-time RL agents and multi-agent systems.<br>
+          I love building scalable solutions and exploring the intersection of math, data, and code.
         </p>
         <ul class="about-list">
           <li><b>Languages:</b> Python, JavaScript, C++, SQL</li>
@@ -999,92 +1105,86 @@
     });
     anime({
       targets: '.blob2',
-      translateY: [
+      translateX: [
         { value: 0, duration: 0 },
-        { value: -60, duration: 8000 },
+        { value: -50, duration: 9000 },
         { value: 0, duration: 9000 }
       ],
-      translateX: [
-        { value: 0, duration: 0 },
-        { value: -30, duration: 9000 },
-        { value: 0, duration: 7000 }
-      ],
-      loop: true,
-      direction: 'alternate',
-      easing: 'easeInOutSine'
-    });
-    anime({
-      targets: '.blob3',
       translateY: [
         { value: 0, duration: 0 },
-        { value: 30, duration: 9000 },
-        { value: 0, duration: 8000 }
-      ],
-      translateX: [
-        { value: 0, duration: 0 },
-        { value: 40, duration: 12000 },
-        { value: 0, duration: 7000 }
-      ],
-      loop: true,
-      direction: 'alternate',
-      easing: 'easeInOutSine'
-    });
-    anime({
-      targets: '.blob4',
-      translateX: [
-        { value: 0, duration: 0 },
-        { value: -30, duration: 9000 },
-        { value: 0, duration: 8000 }
-      ],
-      translateY: [
-        { value: 0, duration: 0 },
-        { value: 20, duration: 7000 },
-        { value: 0, duration: 11000 }
+        { value: -50, duration: 12000 },
+        { value: 0, duration: 12000 }
       ],
       opacity: [
-        { value: 0.18, duration: 0 },
-        { value: 0.27, duration: 11000 },
-        { value: 0.18, duration: 9000 }
+        { value: 0.38, duration: 0 },
+        { value: 0.55, duration: 9000 },
+        { value: 0.38, duration: 9000 }
       ],
       loop: true,
       direction: 'alternate',
       easing: 'easeInOutSine'
     });
 
+    // Initialize AOS (Animate on Scroll)
+    AOS.init({ duration: 850, once: true });
+
     // Typed.js for animated name
-    document.addEventListener("DOMContentLoaded", function() {
-      if(document.getElementById('typed-name')){
+    document.addEventListener('DOMContentLoaded', function(){
+      if(window.Typed){
         new Typed('#typed-name', {
-          strings: ["Manas Ranjan Jena"],
-          typeSpeed: 90,
-          startDelay: 350,
+          strings: ['Manas Ranjan Jena'],
+          typeSpeed: 85,
           showCursor: true,
           cursorChar: '|',
           loop: false
         });
+      } else {
+        document.getElementById('typed-name').innerText = "Manas Ranjan Jena";
       }
-      AOS.init({
-        duration: 800,
-        once: true,
-        offset: 60
-      });
     });
 
-    // Contact form confirmation (only shows message, does not actually send email)
-    document.addEventListener("DOMContentLoaded", function() {
-      const form = document.getElementById('contactForm');
-      const confirmation = document.getElementById('confirmationMessage');
-      if(form && confirmation){
-        form.addEventListener('submit', function(e){
-          setTimeout(function(){
-            confirmation.style.display = 'block';
-            setTimeout(function(){
-              confirmation.style.display = 'none';
-            }, 3400);
-          }, 300);
-        });
+    // Contact form fake confirmation (if using mailto)
+    const contactForm = document.getElementById('contactForm');
+    const confirmationMessage = document.getElementById('confirmationMessage');
+    if(contactForm) {
+      contactForm.addEventListener('submit', function(e){
+        setTimeout(function(){
+          confirmationMessage.style.display = 'block';
+          setTimeout(()=>{ confirmationMessage.style.display = 'none'; }, 3500);
+        }, 400);
+      });
+    }
+
+    // ====== DARK MODE FEATURE ======
+    const darkToggleBtn = document.getElementById('darkToggleBtn');
+    const body = document.body;
+    const moonIcon = '<i class="fa fa-moon"></i>';
+    const sunIcon = '<i class="fa fa-sun"></i>';
+
+    function setDarkMode(on) {
+      if(on) {
+        body.classList.add('dark-mode');
+        darkToggleBtn.innerHTML = sunIcon;
+        darkToggleBtn.setAttribute('aria-label', 'Switch to light mode');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        body.classList.remove('dark-mode');
+        darkToggleBtn.innerHTML = moonIcon;
+        darkToggleBtn.setAttribute('aria-label', 'Switch to dark mode');
+        localStorage.setItem('theme', 'light');
       }
+    }
+    // Initial theme check (default: light)
+    (function(){
+      let theme = localStorage.getItem('theme');
+      if(theme === 'dark') setDarkMode(true);
+      else setDarkMode(false);
+    })();
+    // Toggle on click
+    darkToggleBtn.addEventListener('click', function(){
+      setDarkMode(!body.classList.contains('dark-mode'));
     });
+    // ====== END DARK MODE FEATURE ======
   </script>
 </body>
 </html>
