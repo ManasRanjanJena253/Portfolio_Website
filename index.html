@@ -4,1296 +4,915 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Manas Ranjan Jena — AI & ML Engineer</title>
-  <meta name="description" content="AI & ML Engineer specializing in RAG pipelines, multi-agent systems, reinforcement learning, and production LLM backends.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta name="description" content="AI & ML Engineer specializing in RAG pipelines, multi-agent systems, reinforcement learning, and production LLM backends. B.Tech Mathematics & Computing @ PEC Chandigarh.">
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    /* ── TOKENS ─────────────────────────────────────────────────── */
-    :root {
-      --bg:        #0a0a0f;
-      --bg2:       #111118;
-      --bg3:       #18181f;
-      --surface:   #1e1e28;
-      --border:    #2a2a38;
-      --border2:   #3a3a50;
-      --text:      #e8e8f0;
-      --muted:     #7070a0;
-      --dim:       #4a4a70;
-      --accent:    #6e6aff;
-      --accent2:   #a78bfa;
-      --gold:      #f0c040;
-      --green:     #3cffa0;
-      --red:       #ff5e7d;
-      --font-head: 'DM Serif Display', Georgia, serif;
-      --font-body: 'Instrument Sans', sans-serif;
-      --font-mono: 'DM Mono', monospace;
-      --r:         12px;
-      --r2:        20px;
-      --transition: 0.35s cubic-bezier(.4,0,.2,1);
-    }
-
-    /* ── RESET ──────────────────────────────────────────────────── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--font-body);
-      line-height: 1.65;
-      overflow-x: hidden;
-    }
-    a { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 100%; }
-    ul { list-style: none; }
-    button { cursor: pointer; font-family: inherit; }
-
-    /* ── NOISE TEXTURE ──────────────────────────────────────────── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 1000;
-      opacity: 0.025;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-    }
-
-    /* ── SCROLLBAR ──────────────────────────────────────────────── */
-    ::-webkit-scrollbar { width: 4px; }
-    ::-webkit-scrollbar-track { background: var(--bg2); }
-    ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
-
-    /* ── CONTAINER ──────────────────────────────────────────────── */
-    .container { max-width: 1140px; margin: 0 auto; padding: 0 28px; }
-
-    /* ── NAV ────────────────────────────────────────────────────── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 900;
-      padding: 0;
-      background: transparent;
-      transition: background var(--transition), backdrop-filter var(--transition), border-bottom var(--transition);
-    }
-    nav.scrolled {
-      background: rgba(10,10,15,0.88);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
-    }
-    nav .inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 66px;
-      max-width: 1140px;
-      margin: 0 auto;
-      padding: 0 28px;
-    }
-    .nav-brand {
-      font-family: var(--font-mono);
-      font-size: 0.9rem;
-      color: var(--accent2);
-      letter-spacing: 0.04em;
-    }
-    .nav-brand span { color: var(--muted); }
-    .nav-links { display: flex; gap: 36px; }
-    .nav-links a {
-      font-size: 0.82rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      transition: color var(--transition);
-      position: relative;
-    }
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      bottom: -3px; left: 0;
-      width: 0; height: 1px;
-      background: var(--accent);
-      transition: width var(--transition);
-    }
-    .nav-links a:hover { color: var(--text); }
-    .nav-links a:hover::after { width: 100%; }
-    .nav-right { display: flex; align-items: center; gap: 16px; }
-    .nav-cta {
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      padding: 9px 20px;
-      border-radius: 6px;
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      transition: background var(--transition), transform var(--transition);
-    }
-    .nav-cta:hover { background: var(--accent2); transform: translateY(-1px); }
-    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; }
-    .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: var(--transition); }
-
-    /* ── HERO ───────────────────────────────────────────────────── */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      position: relative;
-      overflow: hidden;
-      padding: 120px 0 80px;
-    }
-    .hero-grid {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(110,106,255,0.06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(110,106,255,0.06) 1px, transparent 1px);
-      background-size: 60px 60px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
-    }
-    .hero-glow {
-      position: absolute;
-      width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(110,106,255,0.12) 0%, transparent 70%);
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-    }
-    .hero-glow2 {
-      position: absolute;
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(167,139,250,0.08) 0%, transparent 70%);
-      top: 20%; right: 10%;
-      pointer-events: none;
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 64px;
-      align-items: center;
-    }
-    .hero-label {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      color: var(--accent);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 24px;
-      padding: 6px 14px;
-      border: 1px solid rgba(110,106,255,0.3);
-      border-radius: 100px;
-      background: rgba(110,106,255,0.06);
-    }
-    .hero-label::before {
-      content: '';
-      width: 6px; height: 6px;
-      background: var(--green);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(60,255,160,0.4); }
-      50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(60,255,160,0); }
-    }
-    .hero-name {
-      font-family: var(--font-head);
-      font-size: clamp(3rem, 6vw, 5.2rem);
-      line-height: 1.04;
-      color: var(--text);
-      margin-bottom: 20px;
-      letter-spacing: -0.02em;
-    }
-    .hero-name em {
-      font-style: italic;
-      color: var(--accent2);
-    }
-    .hero-tagline {
-      font-size: 1.15rem;
-      color: var(--muted);
-      max-width: 540px;
-      margin-bottom: 40px;
-      line-height: 1.75;
-    }
-    .hero-tagline strong { color: var(--text); font-weight: 600; }
-    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
-    .btn-primary {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 13px 28px;
-      background: var(--accent);
-      color: #fff;
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      border: none;
-      transition: all var(--transition);
-    }
-    .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(110,106,255,0.3); }
-    .btn-ghost {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 13px 28px;
-      background: transparent;
-      color: var(--text);
-      border-radius: 8px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      border: 1px solid var(--border2);
-      transition: all var(--transition);
-    }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
-    .hero-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      min-width: 220px;
-    }
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 20px 18px;
-      text-align: center;
-      transition: border-color var(--transition);
-    }
-    .stat-card:hover { border-color: var(--accent); }
-    .stat-card.wide { grid-column: 1 / -1; }
-    .stat-num {
-      font-family: var(--font-mono);
-      font-size: 1.8rem;
-      font-weight: 500;
-      color: var(--accent2);
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .stat-label {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-    }
-
-    /* ── SECTION SHARED ─────────────────────────────────────────── */
-    .section { padding: 100px 0; }
-    .section-header { margin-bottom: 64px; }
-    .section-kicker {
-      font-family: var(--font-mono);
-      font-size: 0.76rem;
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.14em;
-      margin-bottom: 12px;
-      display: flex; align-items: center; gap: 10px;
-    }
-    .section-kicker::before {
-      content: '';
-      display: inline-block;
-      width: 28px; height: 1px;
-      background: var(--accent);
-    }
-    .section-title {
-      font-family: var(--font-head);
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      color: var(--text);
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-    }
-    .section-title em { font-style: italic; color: var(--accent2); }
-    .section-sub {
-      margin-top: 16px;
-      color: var(--muted);
-      font-size: 1.05rem;
-      max-width: 560px;
-      line-height: 1.7;
-    }
-
-    /* ── ABOUT ──────────────────────────────────────────────────── */
-    #about { background: var(--bg2); }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1.5fr;
-      gap: 72px;
-      align-items: start;
-    }
-    .about-sidebar {}
-    .profile-img-wrap {
-      width: 100%;
-      aspect-ratio: 1;
-      max-width: 300px;
-      border-radius: var(--r2);
-      overflow: hidden;
-      border: 1px solid var(--border);
-      position: relative;
-      margin-bottom: 28px;
-    }
-    .profile-img-wrap::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(110,106,255,0.15) 0%, transparent 60%);
-    }
-    .profile-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-    .profile-img-wrap:hover img { transform: scale(1.03); }
-    .contact-pill {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 16px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 0.83rem;
-      color: var(--muted);
-      margin-bottom: 8px;
-      transition: border-color var(--transition);
-    }
-    .contact-pill:hover { border-color: var(--accent); color: var(--text); }
-    .contact-pill i { color: var(--accent); width: 14px; }
-    .about-body {}
-    .about-lead {
-      font-size: 1.15rem;
-      color: var(--text);
-      line-height: 1.8;
-      margin-bottom: 32px;
-    }
-    .about-lead strong { color: var(--accent2); }
-    .target-roles {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 24px 26px;
-      margin-bottom: 36px;
-    }
-    .target-roles h4 {
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--accent);
-      margin-bottom: 14px;
-    }
-    .role-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-    .role-tag {
-      padding: 6px 14px;
-      border-radius: 100px;
-      border: 1px solid var(--border2);
-      font-size: 0.8rem;
-      color: var(--text);
-      background: var(--bg3);
-      transition: all var(--transition);
-    }
-    .role-tag:hover { border-color: var(--accent); color: var(--accent); background: rgba(110,106,255,0.06); }
-    .skills-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-    .skill-group h5 {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--accent);
-      margin-bottom: 10px;
-    }
-    .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .skill-chip {
-      font-size: 0.77rem;
-      padding: 4px 10px;
-      border-radius: 4px;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      font-family: var(--font-mono);
-      transition: all var(--transition);
-    }
-    .skill-chip:hover { color: var(--text); border-color: var(--accent2); }
-
-    /* ── EXPERIENCE ─────────────────────────────────────────────── */
-    #experience { background: var(--bg); }
-    .exp-list { display: flex; flex-direction: column; gap: 0; }
-    .exp-item {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 40px;
-      padding: 40px 0;
-      border-bottom: 1px solid var(--border);
-      position: relative;
-      transition: all var(--transition);
-    }
-    .exp-item:first-child { border-top: 1px solid var(--border); }
-    .exp-item::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 2px;
-      background: transparent;
-      transition: background var(--transition);
-    }
-    .exp-item:hover::before { background: var(--accent); }
-    .exp-left {}
-    .exp-date {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-    .exp-badge {
-      display: inline-block;
-      padding: 3px 10px;
-      border-radius: 100px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-    }
-    .badge-intern { background: rgba(60,255,160,0.1); color: var(--green); border: 1px solid rgba(60,255,160,0.2); }
-    .badge-hack { background: rgba(240,192,64,0.1); color: var(--gold); border: 1px solid rgba(240,192,64,0.2); }
-    .badge-freelance { background: rgba(110,106,255,0.1); color: var(--accent2); border: 1px solid rgba(110,106,255,0.2); }
-    .badge-project { background: rgba(255,94,125,0.1); color: var(--red); border: 1px solid rgba(255,94,125,0.2); }
-    .exp-right {}
-    .exp-org {
-      font-size: 0.8rem;
-      color: var(--accent2);
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    .exp-title {
-      font-family: var(--font-head);
-      font-size: 1.5rem;
-      color: var(--text);
-      margin-bottom: 14px;
-      line-height: 1.2;
-    }
-    .exp-desc {
-      color: var(--muted);
-      font-size: 0.93rem;
-      line-height: 1.75;
-      margin-bottom: 16px;
-    }
-    .exp-tech { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tech-badge {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      padding: 3px 8px;
-      border-radius: 4px;
-      background: var(--bg3);
-      border: 1px solid var(--border);
-      color: var(--dim);
-    }
-
-    /* ── PROJECTS ───────────────────────────────────────────────── */
-    #projects { background: var(--bg2); }
-    .projects-header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 48px;
-      flex-wrap: wrap;
-      gap: 20px;
-    }
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 20px;
-    }
-    .proj-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r2);
-      padding: 32px 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      transition: all var(--transition);
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-    }
-    .proj-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(110,106,255,0.05) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity var(--transition);
-    }
-    .proj-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 24px 60px rgba(110,106,255,0.12); }
-    .proj-card:hover::before { opacity: 1; }
-    .proj-card.featured { grid-column: span 7; }
-    .proj-card.side { grid-column: span 5; }
-    .proj-card.half { grid-column: span 6; }
-    .proj-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-    .proj-icon {
-      width: 44px; height: 44px;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem;
-      flex-shrink: 0;
-    }
-    .proj-icon.violet { background: rgba(110,106,255,0.15); color: var(--accent); }
-    .proj-icon.gold { background: rgba(240,192,64,0.12); color: var(--gold); }
-    .proj-icon.green { background: rgba(60,255,160,0.12); color: var(--green); }
-    .proj-icon.red { background: rgba(255,94,125,0.12); color: var(--red); }
-    .proj-icon.purple { background: rgba(167,139,250,0.15); color: var(--accent2); }
-    .proj-links { display: flex; gap: 10px; }
-    .proj-link-btn {
-      width: 34px; height: 34px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--bg3);
-      color: var(--muted);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem;
-      transition: all var(--transition);
-      text-decoration: none;
-    }
-    .proj-link-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(110,106,255,0.1); }
-    .proj-title {
-      font-family: var(--font-head);
-      font-size: 1.35rem;
-      color: var(--text);
-      line-height: 1.2;
-    }
-    .proj-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; flex: 1; }
-    .proj-highlights {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      margin: 0;
-      padding: 0;
-    }
-    .proj-highlights li {
-      font-size: 0.85rem;
-      color: var(--muted);
-      display: flex;
-      gap: 8px;
-      line-height: 1.55;
-    }
-    .proj-highlights li::before {
-      content: '→';
-      color: var(--accent);
-      flex-shrink: 0;
-      margin-top: 0.5px;
-    }
-    .proj-stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 8px; }
-    .stack-tag {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      padding: 3px 8px;
-      border-radius: 4px;
-      background: rgba(110,106,255,0.08);
-      color: var(--accent2);
-      border: 1px solid rgba(110,106,255,0.15);
-    }
-
-    /* ── CERTIFICATIONS ─────────────────────────────────────────── */
-    #certifications { background: var(--bg); }
-    .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-    .cert-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      padding: 24px 22px;
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      transition: all var(--transition);
-    }
-    .cert-card:hover { border-color: var(--gold); transform: translateY(-2px); }
-    .cert-icon {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      background: rgba(240,192,64,0.1);
-      color: var(--gold);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
-    .cert-body {}
-    .cert-name { font-size: 0.9rem; font-weight: 600; color: var(--text); margin-bottom: 4px; line-height: 1.35; }
-    .cert-issuer { font-size: 0.78rem; color: var(--muted); font-family: var(--font-mono); }
-    .cert-date { font-size: 0.72rem; color: var(--dim); margin-top: 4px; }
-
-    /* ── CONTACT ────────────────────────────────────────────────── */
-    #contact { background: var(--bg2); }
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
-    }
-    .contact-left {}
-    .contact-desc {
-      font-size: 1rem;
-      color: var(--muted);
-      line-height: 1.8;
-      margin-bottom: 36px;
-    }
-    .contact-links-list { display: flex; flex-direction: column; gap: 12px; }
-    .contact-link-row {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px 18px;
-      border: 1px solid var(--border);
-      border-radius: var(--r);
-      background: var(--surface);
-      color: var(--muted);
-      font-size: 0.88rem;
-      transition: all var(--transition);
-      text-decoration: none;
-    }
-    .contact-link-row i { color: var(--accent); width: 16px; text-align: center; }
-    .contact-link-row:hover { border-color: var(--accent); color: var(--text); transform: translateX(4px); }
-    .contact-right {}
-    .contact-form { display: flex; flex-direction: column; gap: 14px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .form-field { display: flex; flex-direction: column; gap: 6px; }
-    .form-field label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .form-field input,
-    .form-field textarea {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 12px 14px;
-      font-size: 0.9rem;
-      font-family: var(--font-body);
-      color: var(--text);
-      outline: none;
-      transition: border-color var(--transition);
-      width: 100%;
-    }
-    .form-field input:focus,
-    .form-field textarea:focus { border-color: var(--accent); }
-    .form-field textarea { min-height: 100px; resize: vertical; }
-    .form-submit {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .form-note { font-size: 0.78rem; color: var(--dim); }
-    .form-success {
-      display: none;
-      padding: 12px 16px;
-      border-radius: 8px;
-      background: rgba(60,255,160,0.08);
-      border: 1px solid rgba(60,255,160,0.2);
-      color: var(--green);
-      font-size: 0.85rem;
-      margin-top: 6px;
-    }
-
-    /* ── FOOTER ─────────────────────────────────────────────────── */
-    footer {
-      background: var(--bg);
-      border-top: 1px solid var(--border);
-      padding: 32px 28px;
-    }
-    footer .inner {
-      max-width: 1140px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    footer .footer-left {
-      font-family: var(--font-mono);
-      font-size: 0.78rem;
-      color: var(--dim);
-    }
-    footer .footer-links { display: flex; gap: 20px; }
-    footer .footer-links a {
-      font-size: 0.85rem;
-      color: var(--muted);
-      transition: color var(--transition);
-    }
-    footer .footer-links a:hover { color: var(--accent); }
-
-    /* ── MOBILE NAV ─────────────────────────────────────────────── */
-    .mobile-nav {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: var(--bg);
-      z-index: 850;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 32px;
-      transform: translateX(100%);
-      transition: transform 0.4s cubic-bezier(.4,0,.2,1);
-    }
-    .mobile-nav.open { transform: translateX(0); }
-    .mobile-nav a {
-      font-family: var(--font-head);
-      font-size: 2rem;
-      color: var(--text);
-      transition: color var(--transition);
-    }
-    .mobile-nav a:hover { color: var(--accent2); }
-    .mobile-close {
-      position: absolute;
-      top: 20px; right: 24px;
-      background: none;
-      border: none;
-      color: var(--muted);
-      font-size: 1.5rem;
-    }
-
-    /* ── SCROLL REVEAL ──────────────────────────────────────────── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    /* ── DIVIDER ────────────────────────────────────────────────── */
-    .divider { width: 1px; height: 20px; background: var(--border2); }
-
-    /* ── RESPONSIVE ─────────────────────────────────────────────── */
-    @media (max-width: 900px) {
-      .hero-content { grid-template-columns: 1fr; }
-      .hero-stats { grid-template-columns: repeat(4, 1fr); max-width: 100%; }
-      .hero-stats .stat-card.wide { grid-column: auto; }
-      .about-grid { grid-template-columns: 1fr; }
-      .profile-img-wrap { max-width: 180px; }
-      .skills-grid { grid-template-columns: 1fr; }
-      .exp-item { grid-template-columns: 1fr; gap: 12px; }
-      .exp-left { display: flex; gap: 12px; align-items: center; }
-      .proj-card.featured,
-      .proj-card.side,
-      .proj-card.half { grid-column: span 12; }
-      .contact-grid { grid-template-columns: 1fr; gap: 48px; }
-      .nav-links { display: none; }
-      .nav-cta { display: none; }
-      .hamburger { display: flex; }
-    }
-    @media (max-width: 600px) {
-      .hero-stats { grid-template-columns: 1fr 1fr; }
-      .form-row { grid-template-columns: 1fr; }
-      .projects-header { flex-direction: column; align-items: flex-start; }
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- ── NAV ──────────────────────────────────────────────────────── -->
-<nav id="navbar">
-  <div class="inner">
-    <div class="nav-brand"><span>~/</span>manas-jena</div>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#certifications">Certs</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    <div class="nav-right">
-      <a class="nav-cta btn-primary" href="mailto:mranjanjena253@gmail.com">Hire Me</a>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </div>
-</nav>
-
-<!-- Mobile Nav -->
-<div class="mobile-nav" id="mobileNav">
-  <button class="mobile-close" id="mobileClose"><i class="fa fa-xmark"></i></button>
-  <a href="#about">About</a>
-  <a href="#experience">Experience</a>
-  <a href="#projects">Projects</a>
-  <a href="#certifications">Certs</a>
-  <a href="#contact">Contact</a>
-</div>
-
-<!-- ── HERO ─────────────────────────────────────────────────────── -->
-<section id="hero">
-  <div class="hero-grid"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-glow2"></div>
-  <div class="container">
-    <div class="hero-content">
-      <div class="hero-left">
-        <div class="hero-label">Available for internships & research roles</div>
-        <h1 class="hero-name">Manas<br><em>Ranjan Jena</em></h1>
-        <p class="hero-tagline">
-          <strong>AI & ML Engineer</strong> specialising in production LLM backends, RAG pipelines, multi-agent systems, and reinforcement learning. B.Tech Mathematics &amp; Computing @ PEC Chandigarh.
-        </p>
-        <div class="hero-actions">
-          <a class="btn-primary" href="#projects"><i class="fa fa-folder-open"></i> View Projects</a>
-          <a class="btn-ghost" href="https://github.com/ManasRanjanJena253" target="_blank"><i class="fa-brands fa-github"></i> GitHub</a>
-          <a class="btn-ghost" href="https://www.linkedin.com/in/manasranjanjena253" target="_blank"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
+  <!-- ── NAVIGATION ── -->
+  <nav id="navbar">
+    <div class="container">
+      <div class="inner">
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#lab">The Lab</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-actions">
+          <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle Theme">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+          <a href="mailto:mranjanjena253@gmail.com" class="nav-cta">Hire Me</a>
         </div>
+        <button class="hamburger" id="hamburger" aria-label="Menu Toggle" onclick="toggleMobileMenu()">
+          <span></span><span></span><span></span>
+        </button>
       </div>
-      <div class="hero-right">
-        <div class="hero-stats">
-          <div class="stat-card">
-            <div class="stat-num">17+</div>
-            <div class="stat-label">Repos</div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu Drawer -->
+  <div class="mobile-nav" id="mobileNav">
+    <button class="mobile-close" onclick="toggleMobileMenu()"><i class="fa fa-xmark"></i></button>
+    <a href="#about" onclick="toggleMobileMenu()">About</a>
+    <a href="#experience" onclick="toggleMobileMenu()">Experience</a>
+    <a href="#projects" onclick="toggleMobileMenu()">Projects</a>
+    <a href="#lab" onclick="toggleMobileMenu()">The Lab</a>
+    <a href="#contact" onclick="toggleMobileMenu()">Contact</a>
+  </div>
+
+  <!-- ── HERO SECTION ── -->
+  <section id="hero">
+    <canvas id="lorenzCanvas" class="lorenz-canvas"></canvas>
+    <div class="hero-radial-glow"></div>
+    
+    <div class="container">
+      <div class="hero-wrapper">
+        <div class="hero-content">
+          <h1 class="hero-title">Building <span>intelligent</span> systems that scale.</h1>
+          <p class="hero-desc">
+            I'm an AI & ML Engineer specializing in production LLM backends, RAG pipelines, multi-agent systems, and reinforcement learning. B.Tech Mathematics &amp; Computing student at PEC Chandigarh.
+          </p>
+          <div class="hero-actions">
+            <a href="#lab" class="btn-primary"><i class="fa fa-flask"></i> Enter the Lab</a>
+            <a href="https://github.com/ManasRanjanJena253" target="_blank" class="btn-ghost"><i class="fa-brands fa-github"></i> GitHub</a>
+            <a href="https://www.linkedin.com/in/manasranjanjena253" target="_blank" class="btn-ghost"><i class="fa-brands fa-linkedin"></i> LinkedIn</a>
           </div>
-          <div class="stat-card">
-            <div class="stat-num">3</div>
-            <div class="stat-label">Hackathons</div>
+        </div>
+        
+        <div class="hero-profile-card">
+          <div class="profile-pic">
+            <img src="https://avatars.githubusercontent.com/u/179374946?v=4" alt="Manas Ranjan Jena" loading="lazy">
           </div>
-          <div class="stat-card">
-            <div class="stat-num">5+</div>
-            <div class="stat-label">Projects</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-num">2025</div>
-            <div class="stat-label">Graduating</div>
+          <div class="profile-info">
+            <h3>Manas Ranjan Jena</h3>
+            <p class="profile-title">Mathematics & Computing @ PEC Chandigarh</p>
+            <p class="profile-summary">
+              I build production-grade ML systems — from async LLM backends and multi-agent pipelines to real-time RAG routers and CV pipelines. Passionate about the intersection of mathematical theory and robust software engineering.
+            </p>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── ABOUT ─────────────────────────────────────────────────────── -->
-<section id="about" class="section">
-  <div class="container">
-    <div class="about-grid">
-      <div class="about-sidebar reveal">
-        <div class="profile-img-wrap">
-          <img src="https://avatars.githubusercontent.com/u/179374946?v=4" alt="Manas Ranjan Jena" loading="lazy">
-        </div>
-        <a href="mailto:mranjanjena253@gmail.com" class="contact-pill">
-          <i class="fa fa-envelope"></i> mranjanjena253@gmail.com
-        </a>
-        <a href="tel:+917888722346" class="contact-pill">
-          <i class="fa fa-phone"></i> +91 78887 22346
-        </a>
-        <a href="https://github.com/ManasRanjanJena253" target="_blank" class="contact-pill">
-          <i class="fa-brands fa-github"></i> ManasRanjanJena253
-        </a>
-        <a href="https://www.linkedin.com/in/manasranjanjena253" target="_blank" class="contact-pill">
-          <i class="fa-brands fa-linkedin"></i> manasranjanjena253
-        </a>
+  <!-- ── BENTO ABOUT SECTION ── -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">About Me</div>
+        <h2 class="section-title">Professional <em>Overview</em></h2>
       </div>
-      <div class="about-body reveal">
-        <div class="section-header">
-          <div class="section-kicker">About</div>
-          <h2 class="section-title">Building <em>intelligent</em> systems that scale</h2>
+
+      <div class="bento-grid">
+        <!-- Summer of Bitcoin Bento Card -->
+        <div class="bento-card col-2 bitcoin-card">
+          <div class="bitcoin-header">
+            <div class="bitcoin-logo">
+              <i class="fa-brands fa-bitcoin"></i>
+            </div>
+            <span class="bitcoin-badge">Program Achievement</span>
+          </div>
+          <div class="bitcoin-body">
+            <h3>Summer of Bitcoin 2026</h3>
+            <p class="bitcoin-highlight">Shortlisted from 60,000 applicants worldwide</p>
+            <p class="bitcoin-desc">
+              Successfully cleared the competitive Week 1 cryptography and protocol development challenges. Contributing to open-source Bitcoin core developer tools and scaling infrastructure (LND/gRPC and Go).
+            </p>
+          </div>
         </div>
-        <p class="about-lead">
-          I'm a <strong>B.Tech student in Mathematics and Computing</strong> at Punjab Engineering College, Chandigarh (2024–2028), deeply passionate about the intersection of <strong>AI infrastructure and applied research</strong>. I build production-grade ML systems — from async LLM backends and multi-agent pipelines to real-time RL trading agents.
-        </p>
-        <div class="target-roles reveal">
-          <h4>Targeting Roles</h4>
-          <div class="role-tags">
-            <span class="role-tag">ML Engineering Intern</span>
-            <span class="role-tag">AI/LLM Backend Intern</span>
-            <span class="role-tag">Research Intern (RL / GenAI)</span>
-            <span class="role-tag">MLOps Engineer Intern</span>
-            <span class="role-tag">Data Science Intern</span>
-            <span class="role-tag">Applied AI Intern</span>
-          </div>
-        </div>
-        <div class="skills-grid reveal">
-          <div class="skill-group">
-            <h5>Languages</h5>
-            <div class="skill-tags">
-              <span class="skill-chip">Python</span>
-              <span class="skill-chip">C++</span>
-              <span class="skill-chip">Java</span>
-              <span class="skill-chip">SQL</span>
-              <span class="skill-chip">JavaScript</span>
+
+        <!-- Quick Stats Bento Card -->
+        <div class="bento-card stats-card">
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div class="stat-num">17+</div>
+              <div class="stat-lbl">GitHub Repos</div>
             </div>
-          </div>
-          <div class="skill-group">
-            <h5>ML / AI</h5>
-            <div class="skill-tags">
-              <span class="skill-chip">PyTorch</span>
-              <span class="skill-chip">TensorFlow</span>
-              <span class="skill-chip">Scikit-learn</span>
-              <span class="skill-chip">LangChain</span>
-              <span class="skill-chip">Hugging Face</span>
-              <span class="skill-chip">Gymnasium</span>
+            <div class="stat-item">
+              <div class="stat-num">3</div>
+              <div class="stat-lbl">Hackathons</div>
             </div>
-          </div>
-          <div class="skill-group">
-            <h5>Backend & Infra</h5>
-            <div class="skill-tags">
-              <span class="skill-chip">FastAPI</span>
-              <span class="skill-chip">Celery</span>
-              <span class="skill-chip">Docker</span>
-              <span class="skill-chip">Redis</span>
-              <span class="skill-chip">PostgreSQL</span>
-              <span class="skill-chip">MongoDB</span>
-              <span class="skill-chip">ChromaDB</span>
-              <span class="skill-chip">MLflow</span>
+            <div class="stat-item">
+              <div class="stat-num">6</div>
+              <div class="stat-lbl">Simulations</div>
             </div>
-          </div>
-          <div class="skill-group">
-            <h5>Specialisations</h5>
-            <div class="skill-tags">
-              <span class="skill-chip">RAG Pipelines</span>
-              <span class="skill-chip">Multi-agent</span>
-              <span class="skill-chip">RL</span>
-              <span class="skill-chip">LLM Fine-tuning</span>
-              <span class="skill-chip">AutoML</span>
-              <span class="skill-chip">MLOps</span>
+            <div class="stat-item">
+              <div class="stat-num">2028</div>
+              <div class="stat-lbl">Graduating</div>
             </div>
           </div>
         </div>
+
+        <!-- Target Roles Bento Card -->
+        <div class="bento-card">
+          <div>
+            <div class="bento-card-title">Targeting Roles</div>
+            <div class="roles-list">
+              <div class="role-item"><i class="fa fa-angle-right"></i> ML Engineering Intern</div>
+              <div class="role-item"><i class="fa fa-angle-right"></i> AI/LLM Backend Intern</div>
+              <div class="role-item"><i class="fa fa-angle-right"></i> Research Intern (RL / GenAI)</div>
+              <div class="role-item"><i class="fa fa-angle-right"></i> MLOps Engineer Intern</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Languages & ML Bento Card -->
+        <div class="bento-card col-2">
+          <div>
+            <div class="bento-card-title">Languages & ML Stack</div>
+            <div class="tag-cloud">
+              <span class="tag">Python</span>
+              <span class="tag">Golang</span>
+              <span class="tag">C++</span>
+              <span class="tag">Java</span>
+              <span class="tag">PyTorch</span>
+              <span class="tag">TensorFlow</span>
+              <span class="tag">Scikit-learn</span>
+              <span class="tag">LangChain</span>
+              <span class="tag">Gymnasium</span>
+              <span class="tag">Hugging Face</span>
+            </div>
+          </div>
+          <div style="margin-top: 14px;">
+            <div class="bento-card-title" style="font-size: 1rem; margin-bottom: 8px;">Backend & Infrastructure</div>
+            <div class="tag-cloud">
+              <span class="tag">FastAPI</span>
+              <span class="tag">Celery</span>
+              <span class="tag">Docker</span>
+              <span class="tag">Redis</span>
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">MongoDB</span>
+              <span class="tag">ChromaDB</span>
+              <span class="tag">MLflow</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── EXPERIENCE ─────────────────────────────────────────────────── -->
-<section id="experience" class="section">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-kicker">Experience</div>
-      <h2 class="section-title">Where I've <em>shipped</em> things</h2>
-      <p class="section-sub">From hackathon stages to production-grade freelance deployments — real problems, real code.</p>
+  <!-- ── EXPERIENCE SECTION ── -->
+  <section id="experience" class="section" style="background: var(--bg-card);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">Timeline</div>
+        <h2 class="section-title">Where I've <em>shipped</em> things</h2>
+      </div>
+
+      <div class="exp-timeline">
+        <!-- Summer of Bitcoin -->
+        <div class="exp-card">
+          <div class="exp-left">
+            <div class="exp-date">2026</div>
+            <span class="exp-badge badge-hack">Shortlisted</span>
+          </div>
+          <div class="exp-right">
+            <h3>Summer of Bitcoin 2026</h3>
+            <div class="exp-org">Summer of Bitcoin — Open Source</div>
+            <p class="exp-desc">
+              Shortlisted from 60,000 applicants worldwide for the prestigious open-source program. Cleared Week 1 cryptographic and core protocol development challenges successfully. Engaging with Bitcoin protocol development, transaction building, and lightning network architectures.
+            </p>
+            <div class="exp-techs">
+              <span class="tech-chip">Bitcoin Core</span>
+              <span class="tech-chip">Cryptography</span>
+              <span class="tech-chip">Go</span>
+              <span class="tech-chip">C++</span>
+              <span class="tech-chip">gRPC</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Freelance -->
+        <div class="exp-card">
+          <div class="exp-left">
+            <div class="exp-date">2025 – Present</div>
+            <span class="exp-badge badge-freelance">Freelance</span>
+          </div>
+          <div class="exp-right">
+            <h3>Freelance AI Engineer</h3>
+            <div class="exp-org">Self-Employed</div>
+            <p class="exp-desc">
+              Built and deployed production LLM backends using FastAPI, Celery, and Docker. Designed async task queuing with Celery + Redis for concurrent ML inference workloads. Specialised in lightweight, resource-efficient ML deployments via containerised model serving.
+            </p>
+            <div class="exp-techs">
+              <span class="tech-chip">FastAPI</span>
+              <span class="tech-chip">Celery</span>
+              <span class="tech-chip">Docker</span>
+              <span class="tech-chip">Redis</span>
+              <span class="tech-chip">LLMs</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Google Hackathon -->
+        <div class="exp-card">
+          <div class="exp-left">
+            <div class="exp-date">2025</div>
+            <span class="exp-badge badge-hack">Hackathon</span>
+          </div>
+          <div class="exp-right">
+            <h3>Sole AI & Backend Engineer — MindHaven</h3>
+            <div class="exp-org">Google GenAI Hackathon 2025</div>
+            <p class="exp-desc">
+              Built a production RAG pipeline with LangChain, ChromaDB, and Gemini featuring hybrid retrieval, multi-turn memory, and Fernet-encrypted user-isolated storage. Implemented JWT auth, rate limiting, Celery task queuing, STT/TTS voice support, async streaming, and a modular FastAPI backend. Designed and ran an LLM evaluation framework comparing Gemini models across empathy, cultural relevance, and safety metrics.
+            </p>
+            <div class="exp-techs">
+              <span class="tech-chip">LangChain</span>
+              <span class="tech-chip">ChromaDB</span>
+              <span class="tech-chip">Gemini</span>
+              <span class="tech-chip">FastAPI</span>
+              <span class="tech-chip">Celery</span>
+              <span class="tech-chip">Fernet</span>
+              <span class="tech-chip">STT/TTS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SIH Hackathon -->
+        <div class="exp-card">
+          <div class="exp-left">
+            <div class="exp-date">2025</div>
+            <span class="exp-badge badge-hack">Hackathon</span>
+          </div>
+          <div class="exp-right">
+            <h3>Team Lead & Sole AI/Backend — Samudra Sachet</h3>
+            <div class="exp-org">Smart India Hackathon 2025</div>
+            <p class="exp-desc">
+              Built real-time CV + NLP pipelines for hazard classification and misinformation filtering. Implemented DBSCAN geospatial clustering with PostGIS for live disaster hotspot detection. Designed FastAPI + PostgreSQL + Cloudinary + Celery backend for async media processing and alert generation.
+            </p>
+            <div class="exp-techs">
+              <span class="tech-chip">OpenCV</span>
+              <span class="tech-chip">NLP</span>
+              <span class="tech-chip">DBSCAN</span>
+              <span class="tech-chip">PostGIS</span>
+              <span class="tech-chip">FastAPI</span>
+              <span class="tech-chip">PostgreSQL</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- IIT Kanpur -->
+        <div class="exp-card">
+          <div class="exp-left">
+            <div class="exp-date">Mar 2025</div>
+            <span class="exp-badge badge-hack">Hackathon</span>
+          </div>
+          <div class="exp-right">
+            <h3>Financial Report Generator</h3>
+            <div class="exp-org">IIT Kanpur — Techkriti GenAI Hackathon</div>
+            <p class="exp-desc">
+              Built an end-to-end LLM pipeline converting raw financial datasets into structured visual reports. Resolved latency by optimising vector store queries and API call chains.
+            </p>
+            <div class="exp-techs">
+              <span class="tech-chip">LLMs</span>
+              <span class="tech-chip">Vector Store</span>
+              <span class="tech-chip">FastAPI</span>
+              <span class="tech-chip">MongoDB</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="exp-list">
+  </section>
 
-      <div class="exp-item reveal">
-        <div class="exp-left">
-          <div class="exp-date">2025 – Present</div>
-          <div><span class="exp-badge badge-freelance">Freelance</span></div>
-        </div>
-        <div class="exp-right">
-          <div class="exp-org">Self-Employed</div>
-          <div class="exp-title">Freelance AI Engineer</div>
-          <p class="exp-desc">Built and deployed production LLM backends using FastAPI, Celery, and Docker. Designed async task queuing with Celery + Redis for concurrent ML inference workloads. Specialised in lightweight, resource-efficient ML deployments via containerised model serving.</p>
-          <div class="exp-tech">
-            <span class="tech-badge">FastAPI</span>
-            <span class="tech-badge">Celery</span>
-            <span class="tech-badge">Docker</span>
-            <span class="tech-badge">Redis</span>
-            <span class="tech-badge">LLMs</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="exp-item reveal">
-        <div class="exp-left">
-          <div class="exp-date">2025</div>
-          <div><span class="exp-badge badge-hack">Hackathon</span></div>
-        </div>
-        <div class="exp-right">
-          <div class="exp-org">Google GenAI Hackathon 2025</div>
-          <div class="exp-title">Sole AI & Backend Engineer — MindHaven</div>
-          <p class="exp-desc">Built a production RAG pipeline with LangChain, ChromaDB, and Gemini featuring hybrid retrieval, multi-turn memory, and Fernet-encrypted user-isolated storage. Implemented JWT auth, rate limiting, Celery task queuing, STT/TTS voice support, async streaming, and a modular FastAPI backend. Designed and ran an LLM evaluation framework comparing Gemini models across empathy, cultural relevance, and safety metrics.</p>
-          <div class="exp-tech">
-            <span class="tech-badge">LangChain</span>
-            <span class="tech-badge">ChromaDB</span>
-            <span class="tech-badge">Gemini</span>
-            <span class="tech-badge">FastAPI</span>
-            <span class="tech-badge">Celery</span>
-            <span class="tech-badge">JWT</span>
-            <span class="tech-badge">STT/TTS</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="exp-item reveal">
-        <div class="exp-left">
-          <div class="exp-date">2025</div>
-          <div><span class="exp-badge badge-hack">Hackathon</span></div>
-        </div>
-        <div class="exp-right">
-          <div class="exp-org">Smart India Hackathon 2025</div>
-          <div class="exp-title">Team Lead & Sole AI/Backend — Samudra Sachet</div>
-          <p class="exp-desc">Built real-time CV + NLP pipelines for hazard classification and misinformation filtering. Implemented DBSCAN geospatial clustering with PostGIS for live disaster hotspot detection. Designed FastAPI + PostgreSQL + Cloudinary + Celery backend for async media processing and alert generation.</p>
-          <div class="exp-tech">
-            <span class="tech-badge">OpenCV</span>
-            <span class="tech-badge">NLP</span>
-            <span class="tech-badge">DBSCAN</span>
-            <span class="tech-badge">PostGIS</span>
-            <span class="tech-badge">FastAPI</span>
-            <span class="tech-badge">PostgreSQL</span>
-            <span class="tech-badge">Celery</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="exp-item reveal">
-        <div class="exp-left">
-          <div class="exp-date">Mar 2025</div>
-          <div><span class="exp-badge badge-hack">Hackathon</span></div>
-        </div>
-        <div class="exp-right">
-          <div class="exp-org">IIT Kanpur — Techkriti GenAI Hackathon</div>
-          <div class="exp-title">Participant — Financial Report Generator</div>
-          <p class="exp-desc">Built an end-to-end LLM pipeline converting raw financial datasets into structured visual reports. Resolved latency by optimising vector store queries and API call chains.</p>
-          <div class="exp-tech">
-            <span class="tech-badge">LLMs</span>
-            <span class="tech-badge">Vector Store</span>
-            <span class="tech-badge">FastAPI</span>
-            <span class="tech-badge">MongoDB</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="exp-item reveal">
-        <div class="exp-left">
-          <div class="exp-date">May – Aug 2024</div>
-          <div><span class="exp-badge badge-intern">Intern</span></div>
-        </div>
-        <div class="exp-right">
-          <div class="exp-org">Unified Mentors — Remote</div>
-          <div class="exp-title">Machine Learning Intern</div>
-          <p class="exp-desc">Built real-world ML pipelines including classification, regression, and computer vision tasks. Developed models for liver damage prediction, thyroid recurrence, and vehicle price prediction. Strengthened core understanding of model evaluation, preprocessing, and feature engineering.</p>
-          <div class="exp-tech">
-            <span class="tech-badge">Scikit-learn</span>
-            <span class="tech-badge">XGBoost</span>
-            <span class="tech-badge">OpenCV</span>
-            <span class="tech-badge">Pandas</span>
-            <span class="tech-badge">Feature Engineering</span>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── PROJECTS ───────────────────────────────────────────────────── -->
-<section id="projects" class="section">
-  <div class="container">
-    <div class="projects-header reveal">
-      <div>
-        <div class="section-kicker">Projects</div>
+  <!-- ── PROJECTS SECTION ── -->
+  <section id="projects" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">Repositories</div>
         <h2 class="section-title">Things I've <em>built</em></h2>
       </div>
-      <a href="https://github.com/ManasRanjanJena253" target="_blank" class="btn-ghost" style="flex-shrink:0;">
-        All repos <i class="fa fa-arrow-up-right-from-square"></i>
-      </a>
-    </div>
-    <div class="projects-grid">
 
-      <!-- SwiftPredict — Featured -->
-      <div class="proj-card featured reveal">
-        <div class="proj-header">
-          <div class="proj-icon violet"><i class="fa fa-bolt"></i></div>
-          <div class="proj-links">
-            <a href="https://github.com/ManasRanjanJena253/SwiftPredict" target="_blank" class="proj-link-btn" title="GitHub">
-              <i class="fa-brands fa-github"></i>
-            </a>
+      <div class="projects-grid">
+        <!-- SwiftPredict -->
+        <div class="project-card">
+          <div class="project-head">
+            <div class="project-icon violet"><i class="fa fa-bolt"></i></div>
+            <div class="project-links">
+              <a href="https://github.com/ManasRanjanJena253/SwiftPredict" target="_blank" class="proj-link" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            </div>
+          </div>
+          <div class="project-body">
+            <h3>SwiftPredict</h3>
+            <p>
+              I got tired of copying and pasting preprocessing and model training loops for every new dataset, so I built SwiftPredict. It's a single-command AutoML library that handles imputation, encoding, and training end-to-end. I rewrote v2 to make the CLI deterministic and published it to PyPI.
+            </p>
+            <ul class="project-bullets">
+              <li>Reduced ML experimentation time by ~90% and boilerplate code by ~95%</li>
+              <li>Published to PyPI — <code>pip install swiftpredict-v2</code></li>
+            </ul>
+          </div>
+          <div class="project-foot">
+            <div class="project-stack">
+              <span class="stack-chip">Python</span>
+              <span class="stack-chip">Scikit-learn</span>
+              <span class="stack-chip">FastAPI</span>
+              <span class="stack-chip">PyPI</span>
+            </div>
           </div>
         </div>
-        <div class="proj-title">SwiftPredict</div>
-        <p class="proj-desc">A pip-installable AutoML library that automates preprocessing, model selection, training, and evaluation with a single file path. Rebuilt v2 from scratch with full documentation and GitHub templates.</p>
-        <ul class="proj-highlights">
-          <li>Reduced ML experimentation time by ~90% and boilerplate code by ~95%</li>
-          <li>Fixed DataFrame misalignment bugs, resolved CLI path issues in v2 rewrite</li>
-          <li>Published to PyPI — <code style="font-family:var(--font-mono);font-size:0.8em;color:var(--accent2);">pip install swiftpredict-v2</code></li>
-        </ul>
-        <div class="proj-stack">
-          <span class="stack-tag">Python</span>
-          <span class="stack-tag">Scikit-learn</span>
-          <span class="stack-tag">FastAPI</span>
-          <span class="stack-tag">PyPI</span>
-          <span class="stack-tag">Streamlit</span>
-        </div>
-      </div>
 
-      <!-- MindHaven -->
-      <div class="proj-card side reveal">
-        <div class="proj-header">
-          <div class="proj-icon green"><i class="fa fa-brain"></i></div>
-          <div class="proj-links">
-            <a href="https://github.com/ManasRanjanJena253" target="_blank" class="proj-link-btn" title="GitHub">
-              <i class="fa-brands fa-github"></i>
-            </a>
+        <!-- MindHaven -->
+        <div class="project-card">
+          <div class="project-head">
+            <div class="project-icon green"><i class="fa fa-brain"></i></div>
+            <div class="project-links">
+              <a href="https://github.com/ManasRanjanJena253" target="_blank" class="proj-link" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            </div>
+          </div>
+          <div class="project-body">
+            <h3>MindHaven</h3>
+            <p>
+              My submission for the Google GenAI Hackathon 2025. I built a production-grade RAG pipeline from scratch. It features user-isolated database encryption using Fernet, multi-turn conversation memory, and streaming audio support. I also ran LLM evaluation scripts to benchmark Gemini's empathy metrics.
+            </p>
+          </div>
+          <div class="project-foot">
+            <div class="project-stack">
+              <span class="stack-chip">LangChain</span>
+              <span class="stack-chip">ChromaDB</span>
+              <span class="stack-chip">Gemini</span>
+              <span class="stack-chip">Celery</span>
+              <span class="stack-chip">FastAPI</span>
+            </div>
           </div>
         </div>
-        <div class="proj-title">MindHaven — RAG Mental Health AI</div>
-        <p class="proj-desc">Production RAG pipeline with Gemini, ChromaDB, hybrid retrieval, multi-turn memory, Fernet-encrypted user-isolated storage, JWT auth, and STT/TTS voice support. Built for Google GenAI Hackathon 2025.</p>
-        <div class="proj-stack">
-          <span class="stack-tag">LangChain</span>
-          <span class="stack-tag">ChromaDB</span>
-          <span class="stack-tag">Gemini</span>
-          <span class="stack-tag">Celery</span>
-          <span class="stack-tag">FastAPI</span>
-        </div>
-      </div>
 
-      <!-- Trading Bot -->
-      <div class="proj-card half reveal">
-        <div class="proj-header">
-          <div class="proj-icon gold"><i class="fa fa-chart-line"></i></div>
-          <div class="proj-links">
-            <a href="https://github.com/ManasRanjanJena253/Trading_Bot" target="_blank" class="proj-link-btn" title="GitHub">
-              <i class="fa-brands fa-github"></i>
-            </a>
+        <!-- Keiro -->
+        <div class="project-card">
+          <div class="project-head">
+            <div class="project-icon green"><i class="fa fa-network-wired"></i></div>
+            <div class="project-links">
+              <a href="https://github.com/ManasRanjanJena253/Keiro" target="_blank" class="proj-link" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            </div>
+          </div>
+          <div class="project-body">
+            <h3>Keiro</h3>
+            <p>
+              An adaptive RAG gateway proxy and query router service. Written in <strong>Golang</strong> (router proxy and semantic cache gateway) and <strong>Python</strong> (gRPC intelligence service classifying query complexity). Minimizes LLM usage costs and query latency.
+            </p>
+            <ul class="project-bullets">
+              <li>Low latency gRPC orchestration between Go gateway and Python services</li>
+              <li>Embedded LRU semantic cache resulting in 0.8ms average query response times on hits</li>
+            </ul>
+          </div>
+          <div class="project-foot">
+            <div class="project-stack">
+              <span class="stack-chip">Golang</span>
+              <span class="stack-chip">Python</span>
+              <span class="stack-chip">gRPC</span>
+              <span class="stack-chip">ChromaDB</span>
+              <span class="stack-chip">Redis</span>
+            </div>
           </div>
         </div>
-        <div class="proj-title">Real-Time Stock Trading Agent</div>
-        <p class="proj-desc">DQN agent for Indian intraday markets. Tackled reward sparsity with hybrid Sharpe ratio + drawdown rewards, and overestimation bias with experience replay + soft target updates.</p>
-        <div class="proj-stack">
-          <span class="stack-tag">PyTorch</span>
-          <span class="stack-tag">Gymnasium</span>
-          <span class="stack-tag">DQN</span>
-          <span class="stack-tag">RL</span>
-        </div>
-      </div>
 
-      <!-- Multi-Agent Code Refiner -->
-      <div class="proj-card half reveal">
-        <div class="proj-header">
-          <div class="proj-icon purple"><i class="fa fa-users-gear"></i></div>
-          <div class="proj-links">
-            <a href="https://github.com/ManasRanjanJena253/Multi_Agent_Code_Editor_Inspired_By_MCP" target="_blank" class="proj-link-btn" title="GitHub">
-              <i class="fa-brands fa-github"></i>
-            </a>
+        <!-- Multi-Agent -->
+        <div class="project-card">
+          <div class="project-head">
+            <div class="project-icon cyan"><i class="fa fa-users-gear"></i></div>
+            <div class="project-links">
+              <a href="https://github.com/ManasRanjanJena253/Multi_Agent_Code_Editor_Inspired_By_MCP" target="_blank" class="proj-link" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            </div>
+          </div>
+          <div class="project-body">
+            <h3>Multi-Agent Refiner</h3>
+            <p>
+              I designed a multi-agent system where five specialized LangChain agents (Writer, Syntax Fixer, Optimizer, Doc Generator, and Reviewer) peer-review and optimize code. By orchestrating their communication using FastAPI, I observed a 40% improvement in complexity metrics.
+            </p>
+          </div>
+          <div class="project-foot">
+            <div class="project-stack">
+              <span class="stack-chip">LangChain</span>
+              <span class="stack-chip">FastAPI</span>
+              <span class="stack-chip">MongoDB</span>
+              <span class="stack-chip">OpenAI</span>
+            </div>
           </div>
         </div>
-        <div class="proj-title">Multi-Agent Code Refiner</div>
-        <p class="proj-desc">Five-agent LangChain system (CodeWriter, SyntaxFixer, Optimizer, DocAgent, Reviewer) with FastAPI orchestration and structured memory chains. Achieved 40% improvement in cyclomatic complexity metrics.</p>
-        <div class="proj-stack">
-          <span class="stack-tag">LangChain</span>
-          <span class="stack-tag">FastAPI</span>
-          <span class="stack-tag">MongoDB</span>
-          <span class="stack-tag">OpenAI</span>
-        </div>
-      </div>
 
-      <!-- DCGAN -->
-      <div class="proj-card half reveal">
-        <div class="proj-header">
-          <div class="proj-icon red"><i class="fa fa-palette"></i></div>
-          <div class="proj-links">
-            <a href="https://github.com/ManasRanjanJena253" target="_blank" class="proj-link-btn" title="GitHub">
-              <i class="fa-brands fa-github"></i>
-            </a>
+        <!-- DCGAN -->
+        <div class="project-card">
+          <div class="project-head">
+            <div class="project-icon red"><i class="fa fa-palette"></i></div>
+            <div class="project-links">
+              <a href="https://github.com/ManasRanjanJena253" target="_blank" class="proj-link" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            </div>
+          </div>
+          <div class="project-body">
+            <h3>DCGAN Digit Generator</h3>
+            <p>
+              To deeply understand GAN dynamics, I built a DCGAN from scratch using PyTorch. I ran into mode collapse early on, which I resolved by implementing one-sided label smoothing and mini-batch discrimination. I tracked FID scores over 200 epochs to measure visual quality.
+            </p>
+          </div>
+          <div class="project-foot">
+            <div class="project-stack">
+              <span class="stack-chip">PyTorch</span>
+              <span class="stack-chip">GANs</span>
+              <span class="stack-chip">MNIST</span>
+            </div>
           </div>
         </div>
-        <div class="proj-title">DCGAN — Handwritten Digit Generation</div>
-        <p class="proj-desc">Implemented DCGAN from scratch on MNIST. Tackled mode collapse with one-sided label smoothing and mini-batch discrimination. Evaluated using FID scores over 200 training epochs.</p>
-        <div class="proj-stack">
-          <span class="stack-tag">PyTorch</span>
-          <span class="stack-tag">GANs</span>
-          <span class="stack-tag">MNIST</span>
-          <span class="stack-tag">FID</span>
-        </div>
-      </div>
 
-      <!-- Samudra Sachet -->
-      <div class="proj-card half reveal">
-        <div class="proj-header">
-          <div class="proj-icon green"><i class="fa fa-satellite-dish"></i></div>
-          <div class="proj-links">
-            <a href="https://github.com/ManasRanjanJena253" target="_blank" class="proj-link-btn" title="GitHub">
-              <i class="fa-brands fa-github"></i>
-            </a>
+        <!-- Samudra Sachet -->
+        <div class="project-card">
+          <div class="project-head">
+            <div class="project-icon green"><i class="fa fa-satellite-dish"></i></div>
+            <div class="project-links">
+              <a href="https://github.com/ManasRanjanJena253" target="_blank" class="proj-link" title="GitHub"><i class="fa-brands fa-github"></i></a>
+            </div>
           </div>
-        </div>
-        <div class="proj-title">Samudra Sachet — Disaster Intelligence</div>
-        <p class="proj-desc">Real-time CV + NLP pipelines for hazard classification and misinformation filtering. DBSCAN geospatial clustering with PostGIS for live disaster hotspot detection. Built for Smart India Hackathon 2025.</p>
-        <div class="proj-stack">
-          <span class="stack-tag">OpenCV</span>
-          <span class="stack-tag">NLP</span>
-          <span class="stack-tag">DBSCAN</span>
-          <span class="stack-tag">PostGIS</span>
-          <span class="stack-tag">Celery</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ── CERTIFICATIONS ─────────────────────────────────────────────── -->
-<section id="certifications" class="section">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-kicker">Certifications</div>
-      <h2 class="section-title">Credentials &amp; <em>learning</em></h2>
-    </div>
-    <div class="certs-grid">
-      <div class="cert-card reveal">
-        <div class="cert-icon"><i class="fa fa-award"></i></div>
-        <div class="cert-body">
-          <div class="cert-name">IBM AI Agents using RAG and LangChain</div>
-          <div class="cert-issuer">IBM</div>
-          <div class="cert-date">Mar 2025</div>
-        </div>
-      </div>
-      <div class="cert-card reveal">
-        <div class="cert-icon"><i class="fa fa-award"></i></div>
-        <div class="cert-body">
-          <div class="cert-name">Deep Learning with PyTorch</div>
-          <div class="cert-issuer">IBM</div>
-          <div class="cert-date">Feb – May 2025</div>
-        </div>
-      </div>
-      <div class="cert-card reveal">
-        <div class="cert-icon"><i class="fa fa-award"></i></div>
-        <div class="cert-body">
-          <div class="cert-name">CNN Specialization</div>
-          <div class="cert-issuer">DeepLearning.AI</div>
-          <div class="cert-date">2025</div>
+          <div class="project-body">
+            <h3>Samudra Sachet</h3>
+            <p>
+              I was the Team Lead and Backend/AI Engineer for this Smart India Hackathon 2025 project. We built a disaster response platform. I combined computer vision (OpenCV) and NLP pipelines for hazard classification, and mapped live disaster hotspots using DBSCAN spatial clustering with PostGIS.
+            </p>
+          </div>
+          <div class="project-foot">
+            <div class="project-stack">
+              <span class="stack-chip">OpenCV</span>
+              <span class="stack-chip">NLP</span>
+              <span class="stack-chip">DBSCAN</span>
+              <span class="stack-chip">PostGIS</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── CONTACT ────────────────────────────────────────────────────── -->
-<section id="contact" class="section">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-kicker">Contact</div>
-      <h2 class="section-title">Let's <em>build</em> something</h2>
-      <p class="section-sub">Open to internships, research collaborations, and freelance AI/ML projects. I respond within 24 hours.</p>
-    </div>
-    <div class="contact-grid">
-      <div class="contact-left reveal">
-        <p class="contact-desc">
-          I'm actively looking for <strong style="color:var(--text)">ML Engineering internships</strong>, <strong style="color:var(--text)">AI backend roles</strong>, and <strong style="color:var(--text)">research positions</strong> in RL and GenAI. If you're building something interesting, I'd love to chat.
-        </p>
-        <div class="contact-links-list">
-          <a href="mailto:mranjanjena253@gmail.com" class="contact-link-row">
-            <i class="fa fa-envelope"></i>
-            mranjanjena253@gmail.com
-          </a>
-          <a href="https://github.com/ManasRanjanJena253" target="_blank" class="contact-link-row">
-            <i class="fa-brands fa-github"></i>
-            github.com/ManasRanjanJena253
-          </a>
-          <a href="https://www.linkedin.com/in/manasranjanjena253" target="_blank" class="contact-link-row">
-            <i class="fa-brands fa-linkedin"></i>
-            linkedin.com/in/manasranjanjena253
-          </a>
-          <a href="tel:+917888722346" class="contact-link-row">
-            <i class="fa fa-phone"></i>
-            +91 78887 22346
-          </a>
+  <!-- ── THE LAB (ARCHITECTURAL FLOWCHARTS) ── -->
+  <section id="lab" class="section" style="background: var(--bg-card);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">Interactive Architecture</div>
+        <h2 class="section-title">The Engineering <em>Lab</em></h2>
+      </div>
+
+      <div class="lab-card">
+        <div class="lab-tabs">
+          <button class="lab-tab-btn active" onclick="switchLabTab('swiftpredict')">
+            <i class="fa fa-bolt"></i> SwiftPredict v2
+          </button>
+          <button class="lab-tab-btn" onclick="switchLabTab('keiro')">
+            <i class="fa fa-network-wired"></i> Keiro Gateway
+          </button>
+          <button class="lab-tab-btn" onclick="switchLabTab('samudra')">
+            <i class="fa fa-satellite-dish"></i> Samudra Sachet
+          </button>
+        </div>
+
+        <!-- SwiftPredict Tab Panel -->
+        <div id="panel-swiftpredict" class="lab-panel active">
+          <p class="panel-intro">
+            <strong>SwiftPredict v2</strong> is a pip-installable AutoML library that automates feature preprocessing, model search, training, and evaluation. Hover or click any node in the architectural flowchart below to inspect its script files and data flow.
+          </p>
+          <div class="lab-layout">
+            <div class="lab-diagram">
+              <div class="diagram-tier">
+                <div class="tier-label">User Interfaces</div>
+                <div class="nodes-grid">
+                  <div class="fc-node" data-project="swiftpredict" data-node="sp-ui">
+                    <div class="node-title">React/Next.js</div>
+                    <div class="node-sub">SwiftPredictUI</div>
+                  </div>
+                  <div class="fc-node" data-project="swiftpredict" data-node="sp-dash">
+                    <div class="node-title">Streamlit Dashboard</div>
+                    <div class="node-sub">Testing Interface</div>
+                  </div>
+                  <div class="fc-node" data-project="swiftpredict" data-node="sp-sdk">
+                    <div class="node-title">Python SDK</div>
+                    <div class="node-sub">SwiftPredict Client</div>
+                  </div>
+                  <div class="fc-node" data-project="swiftpredict" data-node="sp-cli">
+                    <div class="node-title">CLI Interface</div>
+                    <div class="node-sub">swiftpredict command</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="tier-arrow"><i class="fa fa-arrow-down"></i></div>
+              
+              <div class="diagram-tier">
+                <div class="tier-label">Backend Services</div>
+                <div class="nodes-grid">
+                  <div class="fc-node" data-project="swiftpredict" data-node="sp-api">
+                    <div class="node-title">FastAPI Server</div>
+                    <div class="node-sub">logger_apis.py</div>
+                  </div>
+                  <div class="fc-node" data-project="swiftpredict" data-node="sp-core">
+                    <div class="node-title">SwiftPredict Core</div>
+                    <div class="node-sub">swift_predict.py</div>
+                  </div>
+                  <div class="fc-node" data-project="swiftpredict" data-node="sp-trainer">
+                    <div class="node-title">AutoML Engine</div>
+                    <div class="node-sub">automl_trainer.py</div>
+                  </div>
+                  <div class="fc-node" data-project="swiftpredict" data-node="sp-prep">
+                    <div class="node-title">Preprocessing</div>
+                    <div class="node-sub">preprocessing.py</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="tier-arrow"><i class="fa fa-arrow-down"></i></div>
+              
+              <div class="diagram-tier">
+                <div class="tier-label">Data Storage</div>
+                <div class="nodes-grid centered">
+                  <div class="fc-node" data-project="swiftpredict" data-node="sp-db">
+                    <div class="node-title">MongoDB</div>
+                    <div class="node-sub">SwiftPredict Database</div>
+                  </div>
+                  <div class="fc-node" data-project="swiftpredict" data-node="sp-csv">
+                    <div class="node-title">CSV Data Files</div>
+                    <div class="node-sub">train.csv, test.csv</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="lab-inspector" id="inspector-swiftpredict">
+              <div class="inspector-card">
+                <div class="inspector-header"><i class="fa fa-info-circle"></i> Architecture Details</div>
+                <div class="inspector-body active-body">
+                  <h4 class="project-title">SwiftPredict v2 Architecture</h4>
+                  <p class="project-desc">
+                    A pipeline that coordinates automatic data preprocessing, scaling, encoding, and model cross-validation. Client interfaces communicate with the core library while FastAPI manages asynchronous metric logging to MongoDB.
+                  </p>
+                  <p class="hint-text">Hover or click any node on the left to inspect file-level details.</p>
+                </div>
+                <div class="inspector-details" style="display: none;">
+                  <span class="node-badge">Component</span>
+                  <h4 class="ins-title">Node Title</h4>
+                  <p class="ins-file">File: <code>filename.py</code></p>
+                  <p class="ins-desc">Node description goes here.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Keiro Tab Panel -->
+        <div id="panel-keiro" class="lab-panel">
+          <p class="panel-intro">
+            <strong>Keiro</strong> is a self-hostable adaptive RAG gateway proxy. It coordinates rapid local cache matching via a Golang router and routes cache-misses to Python classification and semantic retrieval gRPC services.
+          </p>
+          <div class="lab-layout">
+            <div class="lab-diagram">
+              <div class="diagram-tier">
+                <div class="tier-label">Natural Language Space</div>
+                <div class="nodes-grid centered">
+                  <div class="fc-node" data-project="keiro" data-node="kr-query">
+                    <div class="node-title">User Query</div>
+                    <div class="node-sub">Prompt Entry</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="tier-arrow"><i class="fa fa-arrow-down"></i></div>
+              
+              <div class="diagram-tier">
+                <div class="tier-label">Go Gateway (Service: gateway)</div>
+                <div class="nodes-grid centered">
+                  <div class="fc-node" data-project="keiro" data-node="kr-router">
+                    <div class="node-title">Go chi Router</div>
+                    <div class="node-sub">chi.Router (v1/query)</div>
+                  </div>
+                  <div class="fc-node" data-project="keiro" data-node="kr-queue">
+                    <div class="node-title">Ingestion Queue</div>
+                    <div class="node-sub">IngestionQueue (Go Channel)</div>
+                  </div>
+                  <div class="fc-node" data-project="keiro" data-node="kr-cache">
+                    <div class="node-title">Semantic Cache</div>
+                    <div class="node-sub">Semantic Cache (LRU)</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="tier-arrow"><i class="fa fa-arrow-down"></i></div>
+              
+              <div class="diagram-tier">
+                <div class="tier-label">Python Intelligence (Service: intelligence) &amp; Storage</div>
+                <div class="nodes-grid">
+                  <div class="fc-node" data-project="keiro" data-node="kr-classify">
+                    <div class="node-title">gRPC Classifier</div>
+                    <div class="node-sub">ClassifyQueryType</div>
+                  </div>
+                  <div class="fc-node" data-project="keiro" data-node="kr-retrieve">
+                    <div class="node-title">gRPC Retrieval</div>
+                    <div class="node-sub">ExecuteRetrieval</div>
+                  </div>
+                  <div class="fc-node" data-project="keiro" data-node="kr-response">
+                    <div class="node-title">gRPC Generator</div>
+                    <div class="node-sub">GenerateResponse</div>
+                  </div>
+                  <div class="fc-node" data-project="keiro" data-node="kr-chroma">
+                    <div class="node-title">ChromaDB</div>
+                    <div class="node-sub">Collections Storage</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="tier-arrow"><i class="fa fa-arrow-down"></i></div>
+              
+              <div class="diagram-tier">
+                <div class="tier-label">Result Space</div>
+                <div class="nodes-grid centered">
+                  <div class="fc-node" data-project="keiro" data-node="kr-answer">
+                    <div class="node-title">Generated Answer</div>
+                    <div class="node-sub">Natural Language Response</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="lab-inspector" id="inspector-keiro">
+              <div class="inspector-card">
+                <div class="inspector-header"><i class="fa fa-info-circle"></i> Architecture Details</div>
+                <div class="inspector-body active-body">
+                  <h4 class="project-title">Keiro RAG Gateway Architecture</h4>
+                  <p class="project-desc">
+                    A dual-language service orchestration. A high-concurrency Go proxy routing client requests through an LRU semantic cache, communicating via gRPC calls to a Python backend handling model-based routing and response synthesis.
+                  </p>
+                  <p class="hint-text">Hover or click any node on the left to inspect file-level details.</p>
+                </div>
+                <div class="inspector-details" style="display: none;">
+                  <span class="node-badge">Component</span>
+                  <h4 class="ins-title">Node Title</h4>
+                  <p class="ins-file">File: <code>filename.py</code></p>
+                  <p class="ins-desc">Node description goes here.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Samudra Sachet Tab Panel -->
+        <div id="panel-samudra" class="lab-panel">
+          <p class="panel-intro">
+            <strong>Samudra Sachet</strong> is a real-time disaster monitoring and hazard alert system. Live media reports, Tweets, and citizen reports flow through a FastAPI gateway, store media on Cloudinary, run CNN and NLP validation pipelines, and perform DBSCAN hotspot clustering written to Firestore.
+          </p>
+          <div class="lab-layout">
+            <div class="lab-diagram samudra-diagram-container" style="position: relative; z-index: 1;">
+              <!-- Dynamic SVG Connection Overlay -->
+              <svg class="samudra-svg-connections" width="100%" height="100%" style="position: absolute; top: 0; left: 0; pointer-events: none; z-index: 0; width: 100%; height: 100%; min-height: 580px;">
+                <defs>
+                  <marker id="samudra-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                    <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="var(--text-dim)"></path>
+                  </marker>
+                </defs>
+              </svg>
+              
+              <div class="samudra-flow-container" style="position: relative; z-index: 1;">
+                <!-- Column 1: Frontend Layer -->
+                <div class="samudra-col">
+                  <div class="samudra-layer-box">
+                    <div class="layer-title">Frontend Layer - /frontend/</div>
+                    
+                    <div class="fc-node" data-project="samudra" data-node="ss-landing">
+                      <div class="node-title">LandingPageProtoMultiLingual/</div>
+                      <div class="node-sub">Multi-language public interface</div>
+                      <div class="node-sub">Anonymous report submission</div>
+                    </div>
+                    
+                    <div class="fc-node" data-project="samudra" data-node="ss-auth">
+                      <div class="node-title">login-authorized/</div>
+                      <div class="node-sub">Citizen authentication portal</div>
+                      <div class="node-sub">Firebase Auth integration</div>
+                    </div>
+                    
+                    <div class="fc-node" data-project="samudra" data-node="ss-dash">
+                      <div class="node-title">PROTOWITHDASHBOARD/</div>
+                      <div class="node-sub">Official command dashboard</div>
+                      <div class="node-sub">Live clustering visualization</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Column 2: Backend + Data Layer -->
+                <div class="samudra-col">
+                  <!-- Backend Layer -->
+                  <div class="samudra-layer-box">
+                    <div class="layer-title">Backend Layer - /backend/</div>
+                    
+                    <div class="fc-node" data-project="samudra" data-node="ss-main">
+                      <div class="node-title">main/</div>
+                      <div class="node-sub">FastAPI application</div>
+                      <div class="node-sub">Route handlers + orchestration</div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                      <div class="fc-node" data-project="samudra" data-node="ss-firebase">
+                        <div class="node-title">Firebase Services</div>
+                        <div class="node-sub">Authentication</div>
+                        <div class="node-sub">Cloud Firestore</div>
+                        <div class="node-sub">Storage</div>
+                      </div>
+                      
+                      <div class="fc-node" data-project="samudra" data-node="ss-cloudinary">
+                        <div class="node-title">Cloudinary Integration</div>
+                        <div class="node-sub">Media upload/retrieval</div>
+                        <div class="node-sub">Image/video storage</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Data Layer -->
+                  <div class="samudra-layer-box">
+                    <div class="layer-title">Data Layer</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                      <div class="fc-node" data-project="samudra" data-node="ss-mongo">
+                        <div class="node-title">MongoDB</div>
+                        <div class="node-sub">Motor async driver</div>
+                        <div class="node-sub">Validated schemas</div>
+                      </div>
+                      
+                      <div class="fc-node" data-project="samudra" data-node="ss-firestore">
+                        <div class="node-title">Cloud Firestore</div>
+                        <div class="node-sub">Real-time updates</div>
+                        <div class="node-sub">JSON validation</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Column 3: External Services + ML Pipeline -->
+                <div class="samudra-col">
+                  <!-- External Services -->
+                  <div class="samudra-layer-box">
+                    <div class="layer-title">External Services</div>
+                    
+                    <div class="fc-node" data-project="samudra" data-node="ss-twitter">
+                      <div class="node-title">Twitter API v2</div>
+                      <div class="node-sub">point_radius geo-filters</div>
+                      <div class="node-sub">Social media stream</div>
+                    </div>
+                  </div>
+                  
+                  <!-- ML Pipeline -->
+                  <div class="samudra-layer-box">
+                    <div class="layer-title">ML Pipeline - /backend/ML_models/</div>
+                    
+                    <div class="fc-node" data-project="samudra" data-node="ss-mldata">
+                      <div class="node-title">data/</div>
+                      <div class="node-sub">- Augmented_data.csv</div>
+                      <div class="node-sub">- Embedded_dataset.csv</div>
+                      <div class="node-sub">- enriched_urgency_seed_data.csv</div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                      <div class="fc-node" data-project="samudra" data-node="ss-panic">
+                        <div class="node-title">PanicMeterModel</div>
+                        <div class="node-sub">PyTorch CNN</div>
+                        <div class="node-sub">Image urgency scoring</div>
+                      </div>
+                      
+                      <div class="fc-node" data-project="samudra" data-node="ss-nlp">
+                        <div class="node-title">NLP Pipeline</div>
+                        <div class="node-sub">GloVe embeddings</div>
+                        <div class="node-sub">Ensemble regressors</div>
+                      </div>
+                    </div>
+                    
+                    <div class="fc-node" data-project="samudra" data-node="ss-hotspot">
+                      <div class="node-title">Hotspot Detection</div>
+                      <div class="node-sub">DBSCAN/HDBSCAN</div>
+                      <div class="node-sub">cluster_data() function</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="lab-inspector" id="inspector-samudra">
+              <div class="inspector-card">
+                <div class="inspector-header"><i class="fa fa-info-circle"></i> Architecture Details</div>
+                <div class="inspector-body active-body">
+                  <h4 class="project-title">Samudra Sachet Architecture</h4>
+                  <p class="project-desc">
+                    A real-time disaster reporting and alert dispatcher. Anonymous and authenticated citizens stream crisis reports to FastAPI, validating text urgency via GloVe regressors, scoring image panic metrics with PyTorch CNNs, and clustering incidents using DBSCAN to Firestore.
+                  </p>
+                  <p class="hint-text">Hover or click any node on the left to inspect file-level details.</p>
+                </div>
+                <div class="inspector-details" style="display: none;">
+                  <span class="node-badge">Component</span>
+                  <h4 class="ins-title">Node Title</h4>
+                  <p class="ins-file">File: <code>filename.py</code></p>
+                  <p class="ins-desc">Node description goes here.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="contact-right reveal">
-        <form class="contact-form" id="contactForm">
-          <div class="form-row">
+    </div>
+  </section>
+
+  <!-- ── CERTIFICATIONS SECTION ── -->
+  <section id="certifications" class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">Credentials</div>
+        <h2 class="section-title">Certifications &amp; <em>learning</em></h2>
+      </div>
+
+      <div class="certs-grid">
+        <div class="cert-card">
+          <div class="cert-icon"><i class="fa fa-award"></i></div>
+          <div class="cert-details">
+            <h4>IBM AI Agents using RAG and LangChain</h4>
+            <div class="cert-issuer">IBM</div>
+            <div class="cert-date">Mar 2025</div>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon"><i class="fa fa-award"></i></div>
+          <div class="cert-details">
+            <h4>Deep Learning with PyTorch</h4>
+            <div class="cert-issuer">IBM</div>
+            <div class="cert-date">Feb – May 2025</div>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-icon"><i class="fa fa-award"></i></div>
+          <div class="cert-details">
+            <h4>CNN Specialization</h4>
+            <div class="cert-issuer">DeepLearning.AI</div>
+            <div class="cert-date">2025</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CONTACT SECTION ── -->
+  <section id="contact" class="section" style="background: var(--bg-card);">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-kicker">Contact</div>
+        <h2 class="section-title">Let's <em>build</em> something</h2>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info">
+          <p>
+            I'm actively looking for <strong>ML Engineering internships</strong>, <strong>AI backend roles</strong>, and <strong>research positions</strong> in RL and GenAI. If you're building something interesting, I'd love to chat.
+          </p>
+          <div class="contact-methods">
+            <a href="mailto:mranjanjena253@gmail.com" class="contact-method-card">
+              <i class="fa fa-envelope"></i>
+              <span>mranjanjena253@gmail.com</span>
+            </a>
+            <a href="https://github.com/ManasRanjanJena253" target="_blank" class="contact-method-card">
+              <i class="fa-brands fa-github"></i>
+              <span>github.com/ManasRanjanJena253</span>
+            </a>
+            <a href="https://www.linkedin.com/in/manasranjanjena253" target="_blank" class="contact-method-card">
+              <i class="fa-brands fa-linkedin"></i>
+              <span>linkedin.com/in/manasranjanjena253</span>
+            </a>
+            <a href="tel:+917888722346" class="contact-method-card">
+              <i class="fa fa-phone"></i>
+              <span>+91 78887 22346</span>
+            </a>
+          </div>
+        </div>
+
+        <form class="contact-form" id="contactForm" onsubmit="handleContactSubmit(event)">
+          <div class="form-field-row">
             <div class="form-field">
               <label>Name</label>
-              <input type="text" name="name" placeholder="Your name" required>
+              <input type="text" name="name" placeholder="Your Name" required>
             </div>
             <div class="form-field">
               <label>Email</label>
@@ -1302,123 +921,63 @@
           </div>
           <div class="form-field">
             <label>Subject</label>
-            <input type="text" name="subject" placeholder="Internship opportunity / Collaboration / ...">
+            <input type="text" name="subject" placeholder="Collaboration / Job Opportunity">
           </div>
           <div class="form-field">
             <label>Message</label>
-            <textarea name="message" placeholder="Tell me about the role or project..." required></textarea>
+            <textarea name="message" placeholder="Tell me about the project..." required></textarea>
           </div>
-          <div class="form-submit">
-            <span class="form-note">I'll reply within 24 hours.</span>
-            <button type="submit" class="btn-primary">
-              <i class="fa fa-paper-plane"></i> Send Message
-            </button>
-          </div>
-          <div class="form-success" id="formSuccess">
-            <i class="fa fa-check-circle"></i> Thanks! I'll get back to you soon.
+          <button type="submit" class="btn-primary" id="btn-submit-contact">
+            <i class="fa fa-paper-plane"></i> Send Message
+          </button>
+          <div class="form-status" id="form-success">
+            <i class="fa fa-circle-check"></i> Thank you! Message sent. I will get back to you within 24 hours.
           </div>
         </form>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ── FOOTER ─────────────────────────────────────────────────────── -->
-<footer>
-  <div class="inner">
-    <div class="footer-left">© 2025 Manas Ranjan Jena — Built with intention.</div>
-    <div class="footer-links">
-      <a href="https://github.com/ManasRanjanJena253" target="_blank"><i class="fa-brands fa-github"></i></a>
-      <a href="https://www.linkedin.com/in/manasranjanjena253" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
-      <a href="mailto:mranjanjena253@gmail.com"><i class="fa fa-envelope"></i></a>
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="container">
+      <div class="inner">
+        <div class="footer-text">© 2025 Manas Ranjan Jena — Built with intention.</div>
+        <div class="footer-socials">
+          <a href="https://github.com/ManasRanjanJena253" target="_blank"><i class="fa-brands fa-github"></i></a>
+          <a href="https://www.linkedin.com/in/manasranjanjena253" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="mailto:mranjanjena253@gmail.com"><i class="fa fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ── DEVELOPER TERMINAL ── -->
+  <div id="terminal-trigger" class="terminal-trigger" onclick="toggleTerminal()">
+    <i class="fa fa-terminal"></i> Terminal CLI <kbd>`</kbd>
+  </div>
+
+  <div id="dev-terminal" class="dev-terminal-container">
+    <div class="terminal-bar">
+      <div class="terminal-title">
+        <i class="fa fa-terminal"></i> manas@pec-chandigarh: ~ (type 'help' for commands)
+      </div>
+      <div class="terminal-actions">
+        <button onclick="toggleTerminal()" title="Minimize"><i class="fa fa-minus"></i></button>
+      </div>
+    </div>
+    <div class="terminal-output" id="terminal-output-panel">
+      <div class="output-line">Welcome to Manas Ranjan Jena's interactive portfolio CLI!</div>
+      <div class="output-line">Type <span class="highlight">help</span> to view all available commands.</div>
+      <div class="output-line">&nbsp;</div>
+    </div>
+    <div class="terminal-input-row">
+      <span class="terminal-prompt">visitor@portfolio:~$</span>
+      <input type="text" id="terminal-input-field" autocomplete="off" spellcheck="false" placeholder="Type a command...">
     </div>
   </div>
-</footer>
 
-<!-- ── SCRIPTS ────────────────────────────────────────────────────── -->
-<script>
-  // ── Navbar scroll effect
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.classList.toggle('scrolled', window.scrollY > 40);
-  });
-
-  // ── Mobile nav
-  const hamburger = document.getElementById('hamburger');
-  const mobileNav = document.getElementById('mobileNav');
-  const mobileClose = document.getElementById('mobileClose');
-  hamburger.addEventListener('click', () => mobileNav.classList.add('open'));
-  mobileClose.addEventListener('click', () => mobileNav.classList.remove('open'));
-  mobileNav.querySelectorAll('a').forEach(a => {
-    a.addEventListener('click', () => mobileNav.classList.remove('open'));
-  });
-
-  // ── Smooth scroll for nav links
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', e => {
-      const id = a.getAttribute('href');
-      const target = document.querySelector(id);
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
-
-  // ── Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const revealObserver = new IntersectionObserver(entries => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), 80);
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  reveals.forEach(el => revealObserver.observe(el));
-
-  // ── Staggered reveals in grids
-  document.querySelectorAll('.projects-grid, .certs-grid, .hero-stats').forEach(grid => {
-    const cards = grid.querySelectorAll('.reveal');
-    cards.forEach((card, i) => {
-      card.style.transitionDelay = `${i * 80}ms`;
-    });
-  });
-
-  // ── Contact form
-  document.getElementById('contactForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const btn = this.querySelector('button[type=submit]');
-    btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Sending...';
-    btn.disabled = true;
-    setTimeout(() => {
-      btn.innerHTML = '<i class="fa fa-paper-plane"></i> Send Message';
-      btn.disabled = false;
-      document.getElementById('formSuccess').style.display = 'block';
-      this.reset();
-      setTimeout(() => document.getElementById('formSuccess').style.display = 'none', 5000);
-      // Open mailto as fallback
-      const name = this.name?.value || '';
-      const email = this.email?.value || '';
-      const msg = this.message?.value || '';
-      window.location.href = `mailto:mranjanjena253@gmail.com?subject=Portfolio Contact&body=From: ${name} (${email})%0A%0A${msg}`;
-    }, 900);
-  });
-
-  // ── Subtle card tilt on mouse move (desktop only)
-  if (window.matchMedia('(hover: hover)').matches) {
-    document.querySelectorAll('.proj-card').forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const r = card.getBoundingClientRect();
-        const x = (e.clientX - r.left) / r.width - 0.5;
-        const y = (e.clientY - r.top) / r.height - 0.5;
-        card.style.transform = `perspective(800px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) translateY(-4px)`;
-      });
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-      });
-    });
-  }
-</script>
+  <!-- ── SCRIPTS ── -->
+  <script src="script.js"></script>
 </body>
 </html>
